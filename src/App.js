@@ -1,24 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState , useEffect} from 'react';
+import Question from './components/Question';
 
 function App() {
+  const [start, setStart] = useState(true)
+  const [allQuestions, setAllQuestions] = useState([])
+
+  function startGame() {
+    setStart(true)
+  }
+
+  useEffect(() => {
+    fetch("https://opentdb.com/api.php?amount=5")
+    .then(res => res.json())
+    .then(allQuestions => setAllQuestions(allQuestions))
+  }, [])
+
+  console.log(allQuestions)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section>
+      {
+        start ?
+        <div className='questions'>
+          <Question />
+          <Question />
+          <Question />
+          <Question />
+          <Question />
+          <button className='check-btn'> Check answers</button>
+        </div>
+        :
+        <div className='start'>
+          <h1>Quizzical</h1>
+          <p>Some description if needed</p>
+          <button className='start-btn' onClick={startGame}>Start quiz</button>
+      </div>
+      }
+    </section>
   );
 }
 
