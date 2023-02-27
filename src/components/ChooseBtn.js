@@ -1,5 +1,5 @@
-export default function ChooseBtn () {
+export default function ChooseBtn (props) {
     return (
-        <button className="chooseBtn">Adios</button>
+        <button className="chooseBtn" onClick={props.handle}>{props.answer}</button>
     )
 }

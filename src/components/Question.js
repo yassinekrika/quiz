@@ -1,12 +1,45 @@
 import ChooseBtn from "./ChooseBtn"
-export default function Question() {
+export default function Question(props) {
+    console.log(props.dataQst)
+    const dataQst = props.dataQst
+
+    let arrAnswers = [...dataQst.incorrect_answers]
+    arrAnswers.push(dataQst.correct_answer)
+
+
+    function shuffle(array) {
+        const newArray = [...array]
+        const length = newArray.length
+      
+        for (let start = 0; start < length; start++) {
+          const randomPosition = Math.floor((newArray.length - start) * Math.random())
+          const randomItem = newArray.splice(randomPosition, 1)
+      
+          newArray.push(...randomItem)
+        }
+      
+        return newArray
+    }
+    
+    const shuffled = shuffle(arrAnswers)
+
+    function handle (btnText) {
+        // if (btnText === arrAnswers[arrAnswers.length - 1 ]) {
+        //     console.log("1")
+        // } else {
+        //     console.log("0")
+        // }
+
+        
+    }
+
+    const chooseBtn = shuffled.map(btn => {
+        return  <ChooseBtn answer={btn} handle={() => handle(btn)} />
+    })
     return (
         <div className="question">
-            <h1 className="question">How would one say goodbye in Spanish ?</h1>
-            <ChooseBtn />
-            <ChooseBtn />
-            <ChooseBtn />
-            <ChooseBtn />
+            <h1 className="question">{dataQst.question}</h1>
+            {chooseBtn}
             <hr></hr>
         </div>
     )

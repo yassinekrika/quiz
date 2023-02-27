@@ -3,8 +3,8 @@ import { useState , useEffect} from 'react';
 import Question from './components/Question';
 
 function App() {
-  const [start, setStart] = useState(true)
-  const [allQuestions, setAllQuestions] = useState([])
+  const [data, setData] = useState([])
+  const [start, setStart] = useState(false)
 
   function startGame() {
     setStart(true)
@@ -13,21 +13,19 @@ function App() {
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5")
     .then(res => res.json())
-    .then(allQuestions => setAllQuestions(allQuestions))
+    .then(data => setData(data))
   }, [])
-
-  console.log(allQuestions)
 
   return (
     <section>
       {
         start ?
         <div className='questions'>
-          <Question />
-          <Question />
-          <Question />
-          <Question />
-          <Question />
+          <Question dataQst={data.results[0]} />
+          <Question dataQst={data.results[1]} />
+          <Question dataQst={data.results[2]} />
+          <Question dataQst={data.results[3]} />
+          <Question dataQst={data.results[4]} />
           <button className='check-btn'> Check answers</button>
         </div>
         :
