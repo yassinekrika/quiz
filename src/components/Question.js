@@ -1,4 +1,3 @@
-import ChooseBtn from "./ChooseBtn"
 import { nanoid } from "nanoid"
 export default function Question(props) {
 
@@ -24,12 +23,12 @@ export default function Question(props) {
     
     const shuffled = shuffle(arrAnswers)
 
-    function handle (btnText) {
+    function handleCheck (btnText) {
         
     }
 
     const chooseBtn = shuffled.map(btn => {
-        return  <ChooseBtn key={nanoid()} answer={btn} handleCheck={() => handle(btn)} />
+        return  <button key={nanoid()} className="chooseBtn" onClick={handleCheck}>{btn}</button>
     })
     return (
         <div className="question">
