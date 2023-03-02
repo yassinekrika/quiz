@@ -4,17 +4,31 @@ import Question from './components/Question';
 
 function App() {
   const [data, setData] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [err, setErr] = useState('')
   const [start, setStart] = useState(false)
 
-  function startGame() {
+  async function startGame() {
+    
+    setIsLoading(true)
+
+    try {
+
+      const res = await fetch("https://opentdb.com/api.php?amount=5")
+      if (!res.ok) {
+        throw new Error(`Error! staturs: ${res.status}`)
+      }
+
+      const result = await res.json()
+      setData(result)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setIsLoading(false)
+    }
+    
     setStart(true)
   }
-
-  useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=5")
-    .then(res => res.json())
-    .then(data => setData(data))
-  }, [])
 
   return (
     <section>

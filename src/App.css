@@ -92,3 +92,8 @@ hr {
   background-color: #4D5B9E;
   color: #F5F7FB;
 }
+
+.btn-clicked {
+  color: #4D5B9E;
+  background-color: #D6DBF5;
+}

@@ -24,12 +24,6 @@ export default function Question(props) {
     const shuffled = shuffle(arrAnswers)
 
     function handle (btnText) {
-        // if (btnText === arrAnswers[arrAnswers.length - 1 ]) {
-        //     console.log("1")
-        // } else {
-        //     console.log("0")
-        // }
-
         
     }
 
