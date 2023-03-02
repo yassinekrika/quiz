@@ -1,6 +1,7 @@
 import ChooseBtn from "./ChooseBtn"
+import { nanoid } from "nanoid"
 export default function Question(props) {
-    console.log(props.dataQst)
+
     const dataQst = props.dataQst
 
     let arrAnswers = [...dataQst.incorrect_answers]
@@ -28,7 +29,7 @@ export default function Question(props) {
     }
 
     const chooseBtn = shuffled.map(btn => {
-        return  <ChooseBtn answer={btn} handle={() => handle(btn)} />
+        return  <ChooseBtn key={nanoid()} answer={btn} handleCheck={() => handle(btn)} />
     })
     return (
         <div className="question">

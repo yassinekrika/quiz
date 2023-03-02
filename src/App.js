@@ -1,12 +1,14 @@
 import './App.css';
 import { useState , useEffect} from 'react';
 import Question from './components/Question';
+import { nanoid } from 'nanoid';
 
 function App() {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [err, setErr] = useState('')
   const [start, setStart] = useState(false)
+  
 
   async function startGame() {
     
@@ -20,7 +22,18 @@ function App() {
       }
 
       const result = await res.json()
-      setData(result)
+
+      let array = []
+      for (let i = 0; i < result.results.length; i++) {
+        let newObj = {
+          ...result.results[i],
+          id: nanoid()
+        }
+        array.push(newObj)
+      }
+
+      setData(array)
+
     } catch (err) {
       console.log(err)
     } finally {
@@ -29,17 +42,17 @@ function App() {
     
     setStart(true)
   }
+  
+  const questions = data.map(btn => {
+    return  <Question dataQst={btn} key={btn.id} />
+  })
 
   return (
     <section>
       {
         start ?
         <div className='questions'>
-          <Question dataQst={data.results[0]} />
-          <Question dataQst={data.results[1]} />
-          <Question dataQst={data.results[2]} />
-          <Question dataQst={data.results[3]} />
-          <Question dataQst={data.results[4]} />
+          {questions}
           <button className='check-btn'> Check answers</button>
         </div>
         :
