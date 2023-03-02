@@ -6,7 +6,6 @@ import { nanoid } from 'nanoid';
 function App() {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [err, setErr] = useState('')
   const [start, setStart] = useState(false)
   
 
@@ -22,11 +21,13 @@ function App() {
       }
 
       const result = await res.json()
+      console.log(result)
 
       let array = []
       for (let i = 0; i < result.results.length; i++) {
         let newObj = {
-          ...result.results[i],
+          question: result.results[i].question,
+          answers: [...result.results[i].incorrect_answers, result.results[i].correct_answer],
           id: nanoid()
         }
         array.push(newObj)
@@ -42,9 +43,9 @@ function App() {
     
     setStart(true)
   }
-  
-  const questions = data.map(btn => {
-    return  <Question dataQst={btn} key={btn.id} />
+  // console.log(data)
+  const questions = data.map(item => {
+    return  <Question question={item.question} answers={item.answers} key={item.id} />
   })
 
   return (

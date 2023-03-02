@@ -1,38 +1,43 @@
 import { nanoid } from "nanoid"
+import { useState } from "react"
 export default function Question(props) {
 
-    const dataQst = props.dataQst
+    const questions = props.answers
 
-    let arrAnswers = [...dataQst.incorrect_answers]
-    arrAnswers.push(dataQst.correct_answer)
-
-
+    
     function shuffle(array) {
         const newArray = [...array]
         const length = newArray.length
       
         for (let start = 0; start < length; start++) {
-          const randomPosition = Math.floor((newArray.length - start) * Math.random())
-          const randomItem = newArray.splice(randomPosition, 1)
+            const randomPosition = Math.floor((newArray.length - start) * Math.random())
+            const randomItem = newArray.splice(randomPosition, 1)
       
-          newArray.push(...randomItem)
+            newArray.push(
+                {
+                    ...randomItem,
+                    id: nanoid(),
+                    isChecked: false
+                }
+            )
         }
       
         return newArray
     }
     
-    const shuffled = shuffle(arrAnswers)
-
-    function handleCheck (btnText) {
-        
+    const shuffledQst = shuffle(questions)
+    console.log(shuffledQst)
+    
+    function handleCheck(id) {
+        // console.log(id)
     }
-
-    const chooseBtn = shuffled.map(btn => {
-        return  <button key={nanoid()} className="chooseBtn" onClick={handleCheck}>{btn}</button>
+    
+    const chooseBtn = shuffledQst.map(btn => {
+        return  <button key={btn.id} className="chooseBtn" onClick={handleCheck(btn.id)}>{btn[0]}</button>
     })
     return (
         <div className="question">
-            <h1 className="question">{dataQst.question}</h1>
+            <h1>{props.question}</h1>
             {chooseBtn}
             <hr></hr>
         </div>
